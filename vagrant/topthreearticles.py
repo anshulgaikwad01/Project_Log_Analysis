@@ -40,4 +40,4 @@ def layout_top_three_articles():
 
 
 if __name__ == '__main__':
-	layout_top_three_articles()
+    layout_top_three_articles()

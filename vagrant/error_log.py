@@ -4,11 +4,11 @@ from formatter import repeat_separator
 
 
 def error_log_perc():
-	conn = psycopg2.connect(database="news",
-                                user="vagrant",
-                                password="vagrant")
-        c = conn.cursor()
-        c.execute('''WITH T AS
+    conn = psycopg2.connect(database="news",
+                            user="vagrant",
+                            password="vagrant")
+    c = conn.cursor()
+    c.execute('''WITH T AS
                         (SELECT DATE(LOG.TIME) AS FAILDATE,
                                 ROUND((SUM(CASE WHEN
                                 LOG.STATUS = '404 NOT FOUND'
@@ -26,19 +26,19 @@ def error_log_perc():
                         HAVING T.TOTALFAILURES > 1
                         ''')
 
-        results = c.fetchall()
-        conn.close
-        return results
+    results = c.fetchall()
+    conn.close
+    return results
 
 
 def layout_error_logs():
-        print ("Errors:")
-        repeat_separator()
-        for items in error_log_perc():
-            print("The total errors for the date'" + str(items[1]) +
-                  "' are " + str(items[0]) + '.')
-        repeat_separator()
+    print("Errors:")
+    repeat_separator()
+    for items in error_log_perc():
+        print("The total errors for the date'" + str(items[1]) +
+              "' are " + str(items[0]) + '.')
+    repeat_separator()
 
 
 if __name__ == '__main__':
-        layout_error_logs()
+    layout_error_logs()
